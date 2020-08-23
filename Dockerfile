@@ -4,4 +4,4 @@ MAINTAINER prakashrd
 
 # copy both source files and default data
 COPY . /app
-CMD ["python", "/app/file_conversion.py"]
+CMD python /app/file_conversion.py
