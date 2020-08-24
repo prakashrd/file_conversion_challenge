@@ -14,23 +14,22 @@ Converts a fixed width file to a delimited csv text file.
 ### Usage with Docker
 #### Build Docker Image
 <pre><code>docker build -t file-conversion-challenge .</code></pre>
-#### Run the container
-<pre><code>docker run -d --name my_test file-conversion-challenge</code></pre>
-#### get the container instance id to view the generated
-<pre><code>jai-mac:file_conversion_challenge jai$ docker ps -a
-CONTAINER ID        IMAGE                       COMMAND                  CREATED             STATUS                     PORTS               NAMES
-432dd7061125        file-conversion-challenge   "python file_convers…"   6 seconds ago       Exited (0) 5 seconds ago                       my_test</code></pre>
-#### copy the output from container
+#### Run the container with mount 
+The following runs the docker image `file-conversion-challenge` and mounts the docker output directory
+on host directory which will have extracted delimited file
+<pre><code>docker run -d --name my_test -v ~/my_output:/app/output file-conversion-challenge</code></pre>
+
 the program takes the default values  [specs.json](data/spec.json) and [fixed_width_file](data/fixed_width.dat)
-generates the delimited file to `output` directory
-<pre><code>jai-mac:file_conversion_challenge jai$ docker cp 432dd7061125:/app/output/ ~/
-jai-mac:file_conversion_challenge jai$ ls -l ~/output/
+generates the delimited file to `output` directory which will be mounted to `~/my_output/`
+<pre><code>jai-mac:file_conversion_challenge jai$ ls -l ~/my_output/
 total 8
 -rw-r--r--  1 jai  staff  1040 24 Aug 13:25 delimited_output.csv
-jai-mac:file_conversion_challenge jai$ wc -l ~/output/delimited_output.csv 
+jai-mac:file_conversion_challenge jai$ wc -l ~/my_output/delimited_output.csv 
       10 /Users/jai/output/delimited_output.csv
-jai-mac:file_conversion_challenge jai$ head -n 1 ~/output/delimited_output.csv 
+jai-mac:file_conversion_challenge jai$ head -n 3 ~/my_output/delimited_output.csv 
 f1;f2;f3;f4;f5;f6;f7;f8;f9;f10
+row1£;12ERokpycGTl;3Pl;2h;13lUODFxmpDRE;7RTHvLc;10YLXagLva;13RSdcdylHldT;20EwhTiEAyBoRuoKUnOj;13ESLvoMugZWp
+row2£;12DnywieKRFu;3yx;2w;13pxxGYoockCQ;7MYZTQf;10WKMiqISg;13HTpEmFDquZa;20KVVFbAKOITBomkHWqW;13cjaWsxVjYCc
 jai-mac:file_conversion_challenge jai$ 
 </code></pre>
 
@@ -56,5 +55,4 @@ row10;£12PvGYecUTK;A3T;U2;G13YsWgAimozO;n7TcotP;o10toQWHtE;f13yvALbYAjmM;R20PiX
 
 ### ToDo
 1. document passing files as arguments through docker
-1. mount docker output directory on to host
 1. add logger     
