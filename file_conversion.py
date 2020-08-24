@@ -30,7 +30,7 @@ def argument_parser():
         required=False,
         type=str,
         help="fixed width input file path",
-        default="./delimited_output.csv"
+        default="./output/delimited_output.csv"
     )
     args = p.parse_args()
 
